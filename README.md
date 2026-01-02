@@ -1,4 +1,4 @@
-# 语义网与知识图谱课程项目
+# 语义WEB与知识图谱课程项目
 
 <p align="center">
   <strong>Semantic Web and Knowledge Graphs Course Projects</strong>
