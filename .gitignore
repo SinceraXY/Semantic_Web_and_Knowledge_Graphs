@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+build/
+dist/
+wheels/
+*.egg-info/
+*.egg
+.venv/
+venv/
+ENV/
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+target/
+.idea/
+*.iml
+
+# IDE
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project specific
+*.log
+*.tmp
+4_Chinese_Word_Embedding_Design/output/
+4_Chinese_Word_Embedding_Design/models/*.keras
+!4_Chinese_Word_Embedding_Design/models/.gitkeep

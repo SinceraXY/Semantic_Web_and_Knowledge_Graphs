@@ -1,0 +1,189 @@
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix cs:   <http://example.org/cs#> .
+
+cs:CampusOntology a owl:Ontology ;
+    rdfs:label "校园本体（Ontology Modeling & Reasoning Demo）"@zh .
+
+cs:AcademicEntity a owl:Class ;
+    rdfs:label "学术实体"@zh .
+
+cs:Person a owl:Class ;
+    rdfs:label "人员"@zh ;
+    rdfs:subClassOf cs:AcademicEntity .
+
+cs:Teacher a owl:Class ;
+    rdfs:label "教师"@zh ;
+    rdfs:subClassOf cs:Person .
+
+cs:Student a owl:Class ;
+    rdfs:label "学生"@zh ;
+    rdfs:subClassOf cs:Person .
+
+cs:UndergraduateStudent a owl:Class ;
+    rdfs:label "本科生"@zh ;
+    rdfs:subClassOf cs:Student .
+
+cs:GraduateStudent a owl:Class ;
+    rdfs:label "研究生"@zh ;
+    rdfs:subClassOf cs:Student .
+
+cs:ExcellentStudent a owl:Class ;
+    rdfs:label "优秀学生（推理得到）"@zh ;
+    rdfs:subClassOf cs:Student .
+
+cs:Course a owl:Class ;
+    rdfs:label "课程"@zh ;
+    rdfs:subClassOf cs:AcademicEntity .
+
+cs:UndergraduateCourse a owl:Class ;
+    rdfs:label "本科课程"@zh ;
+    rdfs:subClassOf cs:Course .
+
+cs:GraduateCourse a owl:Class ;
+    rdfs:label "研究生课程"@zh ;
+    rdfs:subClassOf cs:Course .
+
+cs:Semester a owl:Class ;
+    rdfs:label "学期"@zh ;
+    rdfs:subClassOf cs:AcademicEntity .
+
+cs:CourseOffering a owl:Class ;
+    rdfs:label "课程开课安排"@zh ;
+    rdfs:subClassOf cs:AcademicEntity .
+
+cs:Enrollment a owl:Class ;
+    rdfs:label "选课记录"@zh ;
+    rdfs:subClassOf cs:AcademicEntity .
+
+cs:Exam a owl:Class ;
+    rdfs:label "考试"@zh ;
+    rdfs:subClassOf cs:AcademicEntity .
+
+cs:University a owl:Class ;
+    rdfs:label "大学"@zh ;
+    rdfs:subClassOf cs:AcademicEntity .
+
+cs:Department a owl:Class ;
+    rdfs:label "学院/系"@zh ;
+    rdfs:subClassOf cs:AcademicEntity .
+
+cs:Building a owl:Class ;
+    rdfs:label "教学楼"@zh ;
+    rdfs:subClassOf cs:AcademicEntity .
+
+cs:Room a owl:Class ;
+    rdfs:label "教室"@zh ;
+    rdfs:subClassOf cs:AcademicEntity .
+
+cs:teaches a owl:ObjectProperty ;
+    rdfs:label "教授课程"@zh ;
+    rdfs:domain cs:Teacher ;
+    rdfs:range  cs:Course .
+
+cs:enrolledIn a owl:ObjectProperty ;
+    rdfs:label "选修课程"@zh ;
+    rdfs:domain cs:Student ;
+    rdfs:range  cs:Course .
+
+cs:isTaughtBy a owl:ObjectProperty ;
+    rdfs:label "由某教师授课（推理得到）"@zh ;
+    rdfs:domain cs:Student ;
+    rdfs:range  cs:Teacher .
+
+cs:hasDepartment a owl:ObjectProperty ;
+    rdfs:label "拥有学院/系"@zh ;
+    rdfs:domain cs:University ;
+    rdfs:range  cs:Department .
+
+cs:belongsToDepartment a owl:ObjectProperty ;
+    rdfs:label "隶属于学院/系"@zh ;
+    rdfs:domain cs:Person ;
+    rdfs:range  cs:Department .
+
+cs:hasRoom a owl:ObjectProperty ;
+    rdfs:label "拥有教室"@zh ;
+    rdfs:domain cs:Building ;
+    rdfs:range  cs:Room .
+
+cs:heldInRoom a owl:ObjectProperty ;
+    rdfs:label "在教室进行"@zh ;
+    rdfs:domain cs:CourseOffering ;
+    rdfs:range  cs:Room .
+
+cs:hasOffering a owl:ObjectProperty ;
+    rdfs:label "对应开课安排"@zh ;
+    rdfs:domain cs:Course ;
+    rdfs:range  cs:CourseOffering .
+
+cs:offeredInSemester a owl:ObjectProperty ;
+    rdfs:label "开设于学期"@zh ;
+    rdfs:domain cs:CourseOffering ;
+    rdfs:range  cs:Semester .
+
+cs:offeringTaughtBy a owl:ObjectProperty ;
+    rdfs:label "开课教师"@zh ;
+    rdfs:domain cs:CourseOffering ;
+    rdfs:range  cs:Teacher .
+
+cs:hasEnrollment a owl:ObjectProperty ;
+    rdfs:label "拥有选课记录"@zh ;
+    rdfs:domain cs:CourseOffering ;
+    rdfs:range  cs:Enrollment .
+
+cs:enrollmentOfStudent a owl:ObjectProperty ;
+    rdfs:label "记录所属学生"@zh ;
+    rdfs:domain cs:Enrollment ;
+    rdfs:range  cs:Student .
+
+cs:enrollmentForOffering a owl:ObjectProperty ;
+    rdfs:label "记录所属开课"@zh ;
+    rdfs:domain cs:Enrollment ;
+    rdfs:range  cs:CourseOffering .
+
+cs:examForOffering a owl:ObjectProperty ;
+    rdfs:label "对应开课"@zh ;
+    rdfs:domain cs:Exam ;
+    rdfs:range  cs:CourseOffering .
+
+cs:name a owl:DatatypeProperty ;
+    rdfs:label "名称"@zh ;
+    rdfs:domain cs:AcademicEntity ;
+    rdfs:range  xsd:string .
+
+cs:personId a owl:DatatypeProperty ;
+    rdfs:label "人员编号"@zh ;
+    rdfs:domain cs:Person ;
+    rdfs:range  xsd:string .
+
+cs:courseCode a owl:DatatypeProperty ;
+    rdfs:label "课程代码"@zh ;
+    rdfs:domain cs:Course ;
+    rdfs:range  xsd:string .
+
+cs:credits a owl:DatatypeProperty ;
+    rdfs:label "学分"@zh ;
+    rdfs:domain cs:Course ;
+    rdfs:range  xsd:integer .
+
+cs:year a owl:DatatypeProperty ;
+    rdfs:label "年份"@zh ;
+    rdfs:domain cs:AcademicEntity ;
+    rdfs:range  xsd:gYear .
+
+cs:semesterCode a owl:DatatypeProperty ;
+    rdfs:label "学期代码"@zh ;
+    rdfs:domain cs:Semester ;
+    rdfs:range  xsd:string .
+
+cs:enrollmentGrade a owl:DatatypeProperty ;
+    rdfs:label "选课成绩"@zh ;
+    rdfs:domain cs:Enrollment ;
+    rdfs:range  xsd:integer .
+
+cs:eligibleForScholarship a owl:DatatypeProperty ;
+    rdfs:label "是否具备奖学金资格（推理得到）"@zh ;
+    rdfs:domain cs:Student ;
+    rdfs:range  xsd:boolean .

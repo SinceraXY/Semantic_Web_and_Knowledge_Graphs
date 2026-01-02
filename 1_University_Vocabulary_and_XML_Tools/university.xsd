@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:element name="university">
+        <xs:complexType>
+            <xs:sequence>
+
+                <!-- 学院 -->
+                <xs:element name="departments">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="department" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="name" type="xs:string"/>
+                                        <xs:element name="faculty" type="xs:string" minOccurs="0"/>
+                                    </xs:sequence>
+                                    <xs:attribute name="id" type="xs:string" use="required"/>
+                                    <xs:attribute name="code" type="xs:string" use="optional"/>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+                <!-- 教师 -->
+                <xs:element name="teachers">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="teacher" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="name" type="xs:string"/>
+                                        <xs:element name="title" type="xs:string" minOccurs="0"/>
+                                        <xs:element name="email" type="xs:string" minOccurs="0"/>
+                                    </xs:sequence>
+                                    <xs:attribute name="id" type="xs:string" use="required"/>
+                                    <xs:attribute name="deptRef" type="xs:string" use="optional"/>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+                <!-- 学生 -->
+                <xs:element name="students">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="student" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="name" type="xs:string"/>
+                                        <xs:element name="gender" type="xs:string" minOccurs="0"/>
+                                        <xs:element name="enrollmentYear" type="xs:gYear"/>
+                                        <xs:element name="program" type="xs:string" minOccurs="0"/>
+                                    </xs:sequence>
+                                    <xs:attribute name="id" type="xs:string" use="required"/>
+                                    <xs:attribute name="deptRef" type="xs:string" use="optional"/>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+                <!-- 课程 -->
+                <xs:element name="courses">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="course" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="title" type="xs:string"/>
+                                        <xs:element name="credits" type="xs:int"/>
+                                        <xs:element name="departmentRef" type="xs:string"/>
+                                        <xs:element name="teacherRef" type="xs:string"/>
+                                    </xs:sequence>
+                                    <xs:attribute name="id" type="xs:string" use="required"/>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+                <!-- 教室 -->
+                <xs:element name="rooms">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="room" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="name" type="xs:string"/>
+                                        <xs:element name="building" type="xs:string" minOccurs="0"/>
+                                        <xs:element name="capacity" type="xs:int" minOccurs="0"/>
+                                    </xs:sequence>
+                                    <xs:attribute name="id" type="xs:string" use="required"/>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+            </xs:sequence>
+        </xs:complexType>
+
+        <!-- 约束：id 唯一 -->
+        <xs:key name="departmentKey">
+            <xs:selector xpath="departments/department"/>
+            <xs:field xpath="@id"/>
+        </xs:key>
+
+        <xs:key name="teacherKey">
+            <xs:selector xpath="teachers/teacher"/>
+            <xs:field xpath="@id"/>
+        </xs:key>
+
+        <xs:key name="studentKey">
+            <xs:selector xpath="students/student"/>
+            <xs:field xpath="@id"/>
+        </xs:key>
+
+        <!-- 约束：引用合法 -->
+        <xs:keyref name="teacherDeptRef" refer="departmentKey">
+            <xs:selector xpath="teachers/teacher"/>
+            <xs:field xpath="@deptRef"/>
+        </xs:keyref>
+
+        <xs:keyref name="studentDeptRef" refer="departmentKey">
+            <xs:selector xpath="students/student"/>
+            <xs:field xpath="@deptRef"/>
+        </xs:keyref>
+
+        <xs:keyref name="courseDeptRef" refer="departmentKey">
+            <xs:selector xpath="courses/course"/>
+            <xs:field xpath="departmentRef"/>
+        </xs:keyref>
+
+        <xs:keyref name="courseTeacherRef" refer="teacherKey">
+            <xs:selector xpath="courses/course"/>
+            <xs:field xpath="teacherRef"/>
+        </xs:keyref>
+
+    </xs:element>
+</xs:schema>

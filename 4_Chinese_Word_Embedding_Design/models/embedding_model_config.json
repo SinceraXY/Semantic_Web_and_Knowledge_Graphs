@@ -1,0 +1,1 @@
+{"vocab_size": 525, "embedding_dim": 64, "window_size": 3, "num_negative": 5}

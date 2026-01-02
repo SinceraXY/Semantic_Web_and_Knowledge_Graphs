@@ -1,0 +1,51 @@
+<!ELEMENT university (departments, teachers, students, courses, rooms)>
+
+<!ELEMENT departments (department+)>
+<!ELEMENT department (name, faculty?)>
+<!ATTLIST department
+    id   ID     #REQUIRED
+    code CDATA  #IMPLIED
+>
+
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT faculty (#PCDATA)>
+
+<!ELEMENT teachers (teacher+)>
+<!ELEMENT teacher (name, title?, email?)>
+<!ATTLIST teacher
+    id     ID     #REQUIRED
+    deptRef IDREF #IMPLIED
+>
+
+<!ELEMENT title (#PCDATA)>
+<!ELEMENT email (#PCDATA)>
+
+<!ELEMENT students (student+)>
+<!ELEMENT student (name, gender?, enrollmentYear, program?)>
+<!ATTLIST student
+    id     ID     #REQUIRED
+    deptRef IDREF #IMPLIED
+>
+
+<!ELEMENT gender (#PCDATA)>
+<!ELEMENT enrollmentYear (#PCDATA)>
+<!ELEMENT program (#PCDATA)>
+
+<!ELEMENT courses (course+)>
+<!ELEMENT course (title, credits, departmentRef, teacherRef)>
+<!ATTLIST course
+    id ID #REQUIRED
+>
+
+<!ELEMENT credits (#PCDATA)>
+<!ELEMENT departmentRef (#PCDATA)>
+<!ELEMENT teacherRef (#PCDATA)>
+
+<!ELEMENT rooms (room+)>
+<!ELEMENT room (name, building?, capacity?)>
+<!ATTLIST room
+    id ID #REQUIRED
+>
+
+<!ELEMENT building (#PCDATA)>
+<!ELEMENT capacity (#PCDATA)>

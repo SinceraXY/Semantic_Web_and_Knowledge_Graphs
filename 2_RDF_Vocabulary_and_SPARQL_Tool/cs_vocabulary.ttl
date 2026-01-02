@@ -1,0 +1,450 @@
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix cs:   <http://example.org/cs#> .
+
+# =============================
+# 计算机科学领域 RDFS 词汇
+# =============================
+
+# 顶层类
+cs:AcademicEntity a rdfs:Class ;
+    rdfs:label "学术实体"@zh .
+
+cs:Person a rdfs:Class ;
+    rdfs:label "人员"@zh ;
+    rdfs:subClassOf cs:AcademicEntity .
+
+cs:Course a rdfs:Class ;
+    rdfs:label "课程"@zh ;
+    rdfs:subClassOf cs:AcademicEntity .
+
+cs:ResearchProject a rdfs:Class ;
+    rdfs:label "科研项目"@zh ;
+    rdfs:subClassOf cs:AcademicEntity .
+
+cs:Publication a rdfs:Class ;
+    rdfs:label "出版物"@zh ;
+    rdfs:subClassOf cs:AcademicEntity .
+
+# 人员子类
+cs:Teacher a rdfs:Class ;
+    rdfs:label "教师"@zh ;
+    rdfs:subClassOf cs:Person .
+
+cs:Student a rdfs:Class ;
+    rdfs:label "学生"@zh ;
+    rdfs:subClassOf cs:Person .
+
+# 课程子类
+cs:UndergraduateCourse a rdfs:Class ;
+    rdfs:label "本科课程"@zh ;
+    rdfs:subClassOf cs:Course .
+
+cs:GraduateCourse a rdfs:Class ;
+    rdfs:label "研究生课程"@zh ;
+    rdfs:subClassOf cs:Course .
+
+# 属性定义
+
+## 对象属性
+
+cs:teaches a rdf:Property ;
+    rdfs:label "教授课程"@zh ;
+    rdfs:domain cs:Teacher ;
+    rdfs:range  cs:Course .
+
+cs:enrolledIn a rdf:Property ;
+    rdfs:label "选修课程"@zh ;
+    rdfs:domain cs:Student ;
+    rdfs:range  cs:Course .
+
+cs:supervises a rdf:Property ;
+    rdfs:label "指导项目"@zh ;
+    rdfs:domain cs:Teacher ;
+    rdfs:range  cs:ResearchProject .
+
+cs:memberOfProject a rdf:Property ;
+    rdfs:label "参与项目"@zh ;
+    rdfs:domain cs:Person ;
+    rdfs:range  cs:ResearchProject .
+
+cs:authorOf a rdf:Property ;
+    rdfs:label "作者为"@zh ;
+    rdfs:domain cs:Person ;
+    rdfs:range  cs:Publication .
+
+cs:relatedCourse a rdf:Property ;
+    rdfs:label "相关课程"@zh ;
+    rdfs:domain cs:Publication ;
+    rdfs:range  cs:Course .
+
+## 数据属性
+
+cs:name a rdf:Property ;
+    rdfs:label "名称"@zh ;
+    rdfs:domain cs:AcademicEntity ;
+    rdfs:range  xsd:string .
+
+cs:personId a rdf:Property ;
+    rdfs:label "人员编号"@zh ;
+    rdfs:domain cs:Person ;
+    rdfs:range  xsd:string .
+
+cs:courseCode a rdf:Property ;
+    rdfs:label "课程代码"@zh ;
+    rdfs:domain cs:Course ;
+    rdfs:range  xsd:string .
+
+cs:credits a rdf:Property ;
+    rdfs:label "学分"@zh ;
+    rdfs:domain cs:Course ;
+    rdfs:range  xsd:integer .
+
+cs:year a rdf:Property ;
+    rdfs:label "年份"@zh ;
+    rdfs:domain cs:AcademicEntity ;
+    rdfs:range  xsd:gYear .
+
+cs:projectId a rdf:Property ;
+    rdfs:label "项目编号"@zh ;
+    rdfs:domain cs:ResearchProject ;
+    rdfs:range  xsd:string .
+
+cs:doi a rdf:Property ;
+    rdfs:label "DOI"@zh ;
+    rdfs:domain cs:Publication ;
+    rdfs:range  xsd:string .
+
+# =============================
+# 校园场景扩展：类
+# =============================
+
+cs:University a rdfs:Class ;
+    rdfs:label "大学"@zh ;
+    rdfs:subClassOf cs:AcademicEntity .
+
+cs:Department a rdfs:Class ;
+    rdfs:label "学院/系"@zh ;
+    rdfs:subClassOf cs:AcademicEntity .
+
+cs:Building a rdfs:Class ;
+    rdfs:label "教学楼"@zh ;
+    rdfs:subClassOf cs:AcademicEntity .
+
+cs:Room a rdfs:Class ;
+    rdfs:label "教室"@zh ;
+    rdfs:subClassOf cs:AcademicEntity .
+
+# =============================
+# 校园场景扩展：对象属性
+# =============================
+
+cs:hasDepartment a rdf:Property ;
+    rdfs:label "拥有学院/系"@zh ;
+    rdfs:domain cs:University ;
+    rdfs:range  cs:Department .
+
+cs:hasRoom a rdf:Property ;
+    rdfs:label "拥有教室"@zh ;
+    rdfs:domain cs:Building ;
+    rdfs:range  cs:Room .
+
+cs:belongsToDepartment a rdf:Property ;
+    rdfs:label "隶属于学院/系"@zh ;
+    rdfs:domain cs:AcademicEntity ;
+    rdfs:range  cs:Department .
+
+cs:heldInRoom a rdf:Property ;
+    rdfs:label "在教室上课"@zh ;
+    rdfs:domain cs:Course ;
+    rdfs:range  cs:Room .
+
+# =============================
+# 校园场景扩展：数据属性
+# =============================
+
+cs:deptCode a rdf:Property ;
+    rdfs:label "学院代码"@zh ;
+    rdfs:domain cs:Department ;
+    rdfs:range  xsd:string .
+
+cs:roomCode a rdf:Property ;
+    rdfs:label "教室编号"@zh ;
+    rdfs:domain cs:Room ;
+    rdfs:range  xsd:string .
+
+cs:capacity a rdf:Property ;
+    rdfs:label "容量"@zh ;
+    rdfs:domain cs:Room ;
+    rdfs:range  xsd:integer .
+
+cs:gender a rdf:Property ;
+    rdfs:label "性别"@zh ;
+    rdfs:domain cs:Person ;
+    rdfs:range  xsd:string .
+
+cs:enrollmentYear a rdf:Property ;
+    rdfs:label "入学年份"@zh ;
+    rdfs:domain cs:Student ;
+    rdfs:range  xsd:gYear .
+
+# =============================
+# 校园场景进一步扩展：更多类
+# =============================
+
+cs:Faculty a rdfs:Class ;
+    rdfs:label "学院（大类）"@zh ;
+    rdfs:subClassOf cs:AcademicEntity .
+
+cs:Program a rdfs:Class ;
+    rdfs:label "培养方案/专业方向"@zh ;
+    rdfs:subClassOf cs:AcademicEntity .
+
+cs:Major a rdfs:Class ;
+    rdfs:label "专业"@zh ;
+    rdfs:subClassOf cs:AcademicEntity .
+
+cs:Semester a rdfs:Class ;
+    rdfs:label "学期"@zh ;
+    rdfs:subClassOf cs:AcademicEntity .
+
+cs:CourseOffering a rdfs:Class ;
+    rdfs:label "课程开课安排"@zh ;
+    rdfs:subClassOf cs:AcademicEntity .
+
+cs:Enrollment a rdfs:Class ;
+    rdfs:label "选课记录"@zh ;
+    rdfs:subClassOf cs:AcademicEntity .
+
+cs:Exam a rdfs:Class ;
+    rdfs:label "考试"@zh ;
+    rdfs:subClassOf cs:AcademicEntity .
+
+cs:Staff a rdfs:Class ;
+    rdfs:label "职员"@zh ;
+    rdfs:subClassOf cs:Person .
+
+cs:Administrator a rdfs:Class ;
+    rdfs:label "行政人员"@zh ;
+    rdfs:subClassOf cs:Staff .
+
+cs:Advisor a rdfs:Class ;
+    rdfs:label "辅导员/导师"@zh ;
+    rdfs:subClassOf cs:Staff .
+
+cs:UndergraduateStudent a rdfs:Class ;
+    rdfs:label "本科生"@zh ;
+    rdfs:subClassOf cs:Student .
+
+cs:GraduateStudent a rdfs:Class ;
+    rdfs:label "研究生"@zh ;
+    rdfs:subClassOf cs:Student .
+
+cs:Dormitory a rdfs:Class ;
+    rdfs:label "宿舍楼"@zh ;
+    rdfs:subClassOf cs:Building .
+
+cs:DormRoom a rdfs:Class ;
+    rdfs:label "宿舍房间"@zh ;
+    rdfs:subClassOf cs:Room .
+
+cs:Club a rdfs:Class ;
+    rdfs:label "学生社团"@zh ;
+    rdfs:subClassOf cs:AcademicEntity .
+
+cs:Library a rdfs:Class ;
+    rdfs:label "图书馆"@zh ;
+    rdfs:subClassOf cs:Building .
+
+cs:Book a rdfs:Class ;
+    rdfs:label "图书"@zh ;
+    rdfs:subClassOf cs:Publication .
+
+# =============================
+# 校园场景进一步扩展：更多对象属性
+# =============================
+
+cs:hasFaculty a rdf:Property ;
+    rdfs:label "拥有学院大类"@zh ;
+    rdfs:domain cs:University ;
+    rdfs:range  cs:Faculty .
+
+cs:facultyHasDepartment a rdf:Property ;
+    rdfs:label "下设学院/系"@zh ;
+    rdfs:domain cs:Faculty ;
+    rdfs:range  cs:Department .
+
+cs:offersProgram a rdf:Property ;
+    rdfs:label "开设培养方案"@zh ;
+    rdfs:domain cs:Department ;
+    rdfs:range  cs:Program .
+
+cs:hasMajor a rdf:Property ;
+    rdfs:label "包含专业"@zh ;
+    rdfs:domain cs:Program ;
+    rdfs:range  cs:Major .
+
+cs:studentMajor a rdf:Property ;
+    rdfs:label "学生主修专业"@zh ;
+    rdfs:domain cs:Student ;
+    rdfs:range  cs:Major .
+
+cs:worksAtUniversity a rdf:Property ;
+    rdfs:label "任职大学"@zh ;
+    rdfs:domain cs:Staff ;
+    rdfs:range  cs:University .
+
+cs:studiesAtUniversity a rdf:Property ;
+    rdfs:label "就读大学"@zh ;
+    rdfs:domain cs:Student ;
+    rdfs:range  cs:University .
+
+cs:responsibleDepartment a rdf:Property ;
+    rdfs:label "负责学院/系"@zh ;
+    rdfs:domain cs:Program ;
+    rdfs:range  cs:Department .
+
+cs:hasSemester a rdf:Property ;
+    rdfs:label "设置学期"@zh ;
+    rdfs:domain cs:University ;
+    rdfs:range  cs:Semester .
+
+cs:hasOffering a rdf:Property ;
+    rdfs:label "对应开课安排"@zh ;
+    rdfs:domain cs:Course ;
+    rdfs:range  cs:CourseOffering .
+
+cs:offeredInSemester a rdf:Property ;
+    rdfs:label "开设于学期"@zh ;
+    rdfs:domain cs:CourseOffering ;
+    rdfs:range  cs:Semester .
+
+cs:offeringTaughtBy a rdf:Property ;
+    rdfs:label "开课教师"@zh ;
+    rdfs:domain cs:CourseOffering ;
+    rdfs:range  cs:Teacher .
+
+cs:offeringHeldInRoom a rdf:Property ;
+    rdfs:label "开课教室"@zh ;
+    rdfs:domain cs:CourseOffering ;
+    rdfs:range  cs:Room .
+
+cs:hasPrerequisite a rdf:Property ;
+    rdfs:label "先修课程"@zh ;
+    rdfs:domain cs:Course ;
+    rdfs:range  cs:Course .
+
+cs:hasEnrollment a rdf:Property ;
+    rdfs:label "拥有选课记录"@zh ;
+    rdfs:domain cs:CourseOffering ;
+    rdfs:range  cs:Enrollment .
+
+cs:enrollmentOfStudent a rdf:Property ;
+    rdfs:label "记录所属学生"@zh ;
+    rdfs:domain cs:Enrollment ;
+    rdfs:range  cs:Student .
+
+cs:enrollmentForOffering a rdf:Property ;
+    rdfs:label "记录所属开课"@zh ;
+    rdfs:domain cs:Enrollment ;
+    rdfs:range  cs:CourseOffering .
+
+cs:examForOffering a rdf:Property ;
+    rdfs:label "对应考试"@zh ;
+    rdfs:domain cs:Exam ;
+    rdfs:range  cs:CourseOffering .
+
+cs:examRoom a rdf:Property ;
+    rdfs:label "考试教室"@zh ;
+    rdfs:domain cs:Exam ;
+    rdfs:range  cs:Room .
+
+cs:memberOfClub a rdf:Property ;
+    rdfs:label "加入社团"@zh ;
+    rdfs:domain cs:Student ;
+    rdfs:range  cs:Club .
+
+cs:managesClub a rdf:Property ;
+    rdfs:label "管理社团"@zh ;
+    rdfs:domain cs:Staff ;
+    rdfs:range  cs:Club .
+
+cs:hasLibrary a rdf:Property ;
+    rdfs:label "拥有图书馆"@zh ;
+    rdfs:domain cs:University ;
+    rdfs:range  cs:Library .
+
+cs:holdsBook a rdf:Property ;
+    rdfs:label "馆藏图书"@zh ;
+    rdfs:domain cs:Library ;
+    rdfs:range  cs:Book .
+
+cs:borrowsBook a rdf:Property ;
+    rdfs:label "借阅图书"@zh ;
+    rdfs:domain cs:Person ;
+    rdfs:range  cs:Book .
+
+# =============================
+# 校园场景进一步扩展：更多数据属性
+# =============================
+
+cs:facultyCode a rdf:Property ;
+    rdfs:label "学院大类代码"@zh ;
+    rdfs:domain cs:Faculty ;
+    rdfs:range  xsd:string .
+
+cs:programCode a rdf:Property ;
+    rdfs:label "培养方案代码"@zh ;
+    rdfs:domain cs:Program ;
+    rdfs:range  xsd:string .
+
+cs:majorCode a rdf:Property ;
+    rdfs:label "专业代码"@zh ;
+    rdfs:domain cs:Major ;
+    rdfs:range  xsd:string .
+
+cs:semesterCode a rdf:Property ;
+    rdfs:label "学期代码"@zh ;
+    rdfs:domain cs:Semester ;
+    rdfs:range  xsd:string .
+
+cs:semesterYear a rdf:Property ;
+    rdfs:label "学年"@zh ;
+    rdfs:domain cs:Semester ;
+    rdfs:range  xsd:gYear .
+
+cs:semesterTerm a rdf:Property ;
+    rdfs:label "学期名称"@zh ;
+    rdfs:domain cs:Semester ;
+    rdfs:range  xsd:string .
+
+cs:enrollmentGrade a rdf:Property ;
+    rdfs:label "选课成绩"@zh ;
+    rdfs:domain cs:Enrollment ;
+    rdfs:range  xsd:string .
+
+cs:enrollmentStatus a rdf:Property ;
+    rdfs:label "选课状态"@zh ;
+    rdfs:domain cs:Enrollment ;
+    rdfs:range  xsd:string .
+
+cs:examDate a rdf:Property ;
+    rdfs:label "考试日期"@zh ;
+    rdfs:domain cs:Exam ;
+    rdfs:range  xsd:date .
+
+cs:email a rdf:Property ;
+    rdfs:label "电子邮箱"@zh ;
+    rdfs:domain cs:Person ;
+    rdfs:range  xsd:string .
+
+cs:office a rdf:Property ;
+    rdfs:label "办公室"@zh ;
+    rdfs:domain cs:Staff ;
+    rdfs:range  xsd:string .
+
+cs:officeHour a rdf:Property ;
+    rdfs:label "办公时间"@zh ;
+    rdfs:domain cs:Staff ;
+    rdfs:range  xsd:string .

@@ -1,0 +1,99 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix cs: <http://example.org/cs#> .
+
+cs:univ_demo a cs:University ;
+    cs:name "示例大学"@zh ;
+    cs:year "2025"^^xsd:gYear ;
+    cs:hasDepartment cs:dept_cs , cs:dept_math .
+
+cs:dept_cs a cs:Department ;
+    cs:name "计算机科学系"@zh .
+
+cs:dept_math a cs:Department ;
+    cs:name "数学系"@zh .
+
+cs:teacher_wang a cs:Teacher ;
+    cs:name "王老师"@zh ;
+    cs:personId "T001" ;
+    cs:belongsToDepartment cs:dept_cs ;
+    cs:teaches cs:course_kg .
+
+cs:teacher_liu a cs:Teacher ;
+    cs:name "刘老师"@zh ;
+    cs:personId "T002" ;
+    cs:belongsToDepartment cs:dept_cs ;
+    cs:teaches cs:course_python .
+
+cs:student_zhang a cs:Student, cs:UndergraduateStudent ;
+    cs:name "张三"@zh ;
+    cs:personId "S001" ;
+    cs:belongsToDepartment cs:dept_cs ;
+    cs:enrolledIn cs:course_kg , cs:course_python .
+
+cs:student_li a cs:Student, cs:GraduateStudent ;
+    cs:name "李四"@zh ;
+    cs:personId "S002" ;
+    cs:belongsToDepartment cs:dept_math ;
+    cs:enrolledIn cs:course_kg .
+
+cs:course_kg a cs:GraduateCourse ;
+    cs:name "知识图谱"@zh ;
+    cs:courseCode "CS7001" ;
+    cs:credits 3 ;
+    cs:year "2025"^^xsd:gYear ;
+    cs:hasOffering cs:offering_kg_2025_fall .
+
+cs:course_python a cs:UndergraduateCourse ;
+    cs:name "Python 程序设计"@zh ;
+    cs:courseCode "CS2001" ;
+    cs:credits 2 ;
+    cs:year "2025"^^xsd:gYear ;
+    cs:hasOffering cs:offering_python_2025_fall .
+
+cs:sem_2025_fall a cs:Semester ;
+    cs:name "2025 秋季学期"@zh ;
+    cs:semesterCode "2025-FALL" ;
+    cs:year "2025"^^xsd:gYear .
+
+cs:building_main a cs:Building ;
+    cs:name "主楼"@zh ;
+    cs:hasRoom cs:room_main101 .
+
+cs:room_main101 a cs:Room ;
+    cs:name "主楼 101"@zh .
+
+cs:offering_kg_2025_fall a cs:CourseOffering ;
+    cs:name "知识图谱 2025 秋季班"@zh ;
+    cs:offeredInSemester cs:sem_2025_fall ;
+    cs:offeringTaughtBy cs:teacher_wang ;
+    cs:heldInRoom cs:room_main101 ;
+    cs:hasEnrollment cs:enroll_zhang_kg_2025 , cs:enroll_li_kg_2025 .
+
+cs:offering_python_2025_fall a cs:CourseOffering ;
+    cs:name "Python 程序设计 2025 秋季班"@zh ;
+    cs:offeredInSemester cs:sem_2025_fall ;
+    cs:offeringTaughtBy cs:teacher_liu ;
+    cs:heldInRoom cs:room_main101 ;
+    cs:hasEnrollment cs:enroll_zhang_python_2025 .
+
+cs:enroll_zhang_kg_2025 a cs:Enrollment ;
+    cs:enrollmentOfStudent cs:student_zhang ;
+    cs:enrollmentForOffering cs:offering_kg_2025_fall ;
+    cs:enrollmentGrade 95 .
+
+cs:enroll_li_kg_2025 a cs:Enrollment ;
+    cs:enrollmentOfStudent cs:student_li ;
+    cs:enrollmentForOffering cs:offering_kg_2025_fall ;
+    cs:enrollmentGrade 88 .
+
+cs:enroll_zhang_python_2025 a cs:Enrollment ;
+    cs:enrollmentOfStudent cs:student_zhang ;
+    cs:enrollmentForOffering cs:offering_python_2025_fall ;
+    cs:enrollmentGrade 92 .
+
+cs:exam_kg_final_2025 a cs:Exam ;
+    cs:name "知识图谱期末考试"@zh ;
+    cs:examForOffering cs:offering_kg_2025_fall .

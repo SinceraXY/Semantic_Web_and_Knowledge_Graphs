@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE university SYSTEM "university.dtd">
+<university xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:noNamespaceSchemaLocation="university.xsd">
+
+    <departments>
+        <department id="D1" code="计科">
+            <name>计算机科学系</name>
+            <faculty>工学院</faculty>
+        </department>
+        <department id="D2" code="数学">
+            <name>数学系</name>
+            <faculty>理学院</faculty>
+        </department>
+        <department id="D3" code="物理">
+            <name>物理系</name>
+            <faculty>理学院</faculty>
+        </department>
+        <department id="D4" code="外语">
+            <name>外国语学院</name>
+            <faculty>人文学院</faculty>
+        </department>
+    </departments>
+
+    <teachers>
+        <teacher id="T1" deptRef="D1">
+            <name>王晓</name>
+            <title>教授</title>
+        </teacher>
+        <teacher id="T2" deptRef="D2">
+            <name>李强</name>
+            <title>副教授</title>
+        </teacher>
+        <teacher id="T3" deptRef="D1">
+            <name>赵敏</name>
+            <title>副教授</title>
+        </teacher>
+        <teacher id="T4" deptRef="D3">
+            <name>刘伟</name>
+            <title>讲师</title>
+        </teacher>
+        <teacher id="T5" deptRef="D4">
+            <name>孙丽</name>
+            <title>教授</title>
+        </teacher>
+    </teachers>
+
+    <students>
+        <student id="S1" deptRef="D1">
+            <name>张晨</name>
+            <gender>男</gender>
+            <enrollmentYear>2022</enrollmentYear>
+            <program>计算机科学本科</program>
+        </student>
+        <student id="S2" deptRef="D2">
+            <name>陈芳</name>
+            <gender>女</gender>
+            <enrollmentYear>2023</enrollmentYear>
+            <program>数学与应用数学本科</program>
+        </student>
+        <student id="S3" deptRef="D1">
+            <name>刘洋</name>
+            <gender>男</gender>
+            <enrollmentYear>2021</enrollmentYear>
+            <program>软件工程本科</program>
+        </student>
+        <student id="S4" deptRef="D3">
+            <name>王丽</name>
+            <gender>女</gender>
+            <enrollmentYear>2020</enrollmentYear>
+            <program>物理学本科</program>
+        </student>
+        <student id="S5" deptRef="D4">
+            <name>周杰</name>
+            <gender>男</gender>
+            <enrollmentYear>2022</enrollmentYear>
+            <program>英语本科</program>
+        </student>
+    </students>
+
+    <courses>
+        <course id="C1">
+            <title>数据结构</title>
+            <credits>3</credits>
+            <departmentRef>D1</departmentRef>
+            <teacherRef>T1</teacherRef>
+        </course>
+        <course id="C2">
+            <title>线性代数</title>
+            <credits>4</credits>
+            <departmentRef>D2</departmentRef>
+            <teacherRef>T2</teacherRef>
+        </course>
+        <course id="C3">
+            <title>操作系统</title>
+            <credits>3</credits>
+            <departmentRef>D1</departmentRef>
+            <teacherRef>T3</teacherRef>
+        </course>
+        <course id="C4">
+            <title>量子物理</title>
+            <credits>3</credits>
+            <departmentRef>D3</departmentRef>
+            <teacherRef>T4</teacherRef>
+        </course>
+        <course id="C5">
+            <title>大学英语</title>
+            <credits>2</credits>
+            <departmentRef>D4</departmentRef>
+            <teacherRef>T5</teacherRef>
+        </course>
+    </courses>
+
+    <rooms>
+        <room id="R1">
+            <name>101 教室</name>
+            <building>主楼</building>
+            <capacity>60</capacity>
+        </room>
+        <room id="R2">
+            <name>202 教室</name>
+            <building>理科楼</building>
+            <capacity>40</capacity>
+        </room>
+        <room id="R3">
+            <name>301 教室</name>
+            <building>工科楼</building>
+            <capacity>80</capacity>
+        </room>
+    </rooms>
+
+</university>

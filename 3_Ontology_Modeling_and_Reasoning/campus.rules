@@ -1,0 +1,27 @@
+@prefix cs:  <http://example.org/cs#>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+[rule_isTaughtBy:
+  (?t rdf:type cs:Teacher)
+  (?t cs:teaches ?c)
+  (?s rdf:type cs:Student)
+  (?s cs:enrolledIn ?c)
+  ->
+  (?s cs:isTaughtBy ?t)
+]
+
+[rule_excellentStudent:
+  (?e rdf:type cs:Enrollment)
+  (?e cs:enrollmentOfStudent ?s)
+  (?e cs:enrollmentGrade ?g)
+  greaterThan(?g, 90)
+  ->
+  (?s rdf:type cs:ExcellentStudent)
+]
+
+[rule_scholarship:
+  (?s rdf:type cs:ExcellentStudent)
+  ->
+  (?s cs:eligibleForScholarship "true"^^xsd:boolean)
+]

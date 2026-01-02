@@ -1,0 +1,288 @@
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix cs:   <http://example.org/cs#> .
+
+# 引用同目录下定义的 RDFS 词汇（在工具中会统一加载 cs_vocabulary.ttl + cs_data.ttl）
+
+# 教师
+cs:teacher_wang a cs:Teacher ;
+    cs:name "王老师"@zh ;
+    cs:personId "T001" ;
+    cs:memberOfProject cs:proj_kg .
+
+cs:teacher_liu a cs:Teacher ;
+    cs:name "刘老师"@zh ;
+    cs:personId "T002" ;
+    cs:memberOfProject cs:proj_nlp .
+
+# 学生
+cs:student_zhang a cs:Student ;
+    cs:name "张三"@zh ;
+    cs:personId "S001" ;
+    cs:enrolledIn cs:course_kg , cs:course_python ;
+    cs:memberOfProject cs:proj_kg .
+
+cs:student_li a cs:Student ;
+    cs:name "李四"@zh ;
+    cs:personId "S002" ;
+    cs:enrolledIn cs:course_kg ;
+    cs:memberOfProject cs:proj_nlp .
+
+# 课程
+cs:course_kg a cs:GraduateCourse ;
+    cs:name "知识图谱"@zh ;
+    cs:courseCode "CS7001" ;
+    cs:credits 3 ;
+    cs:year "2025"^^xsd:gYear .
+
+cs:course_python a cs:UndergraduateCourse ;
+    cs:name "Python 程序设计"@zh ;
+    cs:courseCode "CS2001" ;
+    cs:credits 2 ;
+    cs:year "2025"^^xsd:gYear .
+
+# 教师教授课程
+cs:teacher_wang cs:teaches cs:course_kg .
+cs:teacher_liu  cs:teaches cs:course_python .
+
+# 科研项目
+cs:proj_kg a cs:ResearchProject ;
+    cs:name "面向知识图谱的语义建模"@zh ;
+    cs:projectId "P-KG-01" ;
+    cs:year "2023"^^xsd:gYear .
+
+cs:proj_nlp a cs:ResearchProject ;
+    cs:name "自然语言处理与问答系统"@zh ;
+    cs:projectId "P-NLP-01" ;
+    cs:year "2022"^^xsd:gYear .
+
+# 指导项目
+cs:teacher_wang cs:supervises cs:proj_kg .
+cs:teacher_liu  cs:supervises cs:proj_nlp .
+
+# 出版物
+cs:pub_kg_paper a cs:Publication ;
+    cs:name "基于知识图谱的课程推荐方法研究"@zh ;
+    cs:doi "10.1234/kg.2025.001" ;
+    cs:year "2025"^^xsd:gYear ;
+    cs:relatedCourse cs:course_kg .
+
+cs:teacher_wang cs:authorOf cs:pub_kg_paper .
+cs:student_zhang cs:authorOf cs:pub_kg_paper .
+
+# =============================
+# 校园场景扩展示例：大学 / 学院 / 建筑 / 教室
+# =============================
+
+cs:univ_demo a cs:University ;
+    cs:name "示例大学"@zh ;
+    cs:year "2020"^^xsd:gYear .
+
+cs:dept_cs a cs:Department ;
+    cs:name "计算机科学系"@zh ;
+    cs:deptCode "CS" .
+
+cs:dept_math a cs:Department ;
+    cs:name "数学系"@zh ;
+    cs:deptCode "MATH" .
+
+cs:dept_se a cs:Department ;
+    cs:name "软件工程系"@zh ;
+    cs:deptCode "SE" .
+
+cs:univ_demo cs:hasDepartment cs:dept_cs , cs:dept_math , cs:dept_se .
+
+cs:building_main a cs:Building ;
+    cs:name "主楼"@zh .
+
+cs:building_lab a cs:Building ;
+    cs:name "实验楼"@zh .
+
+cs:room_main101 a cs:Room ;
+    cs:name "主楼 101 教室"@zh ;
+    cs:roomCode "MAIN-101" ;
+    cs:capacity 80 .
+
+cs:room_main201 a cs:Room ;
+    cs:name "主楼 201 教室"@zh ;
+    cs:roomCode "MAIN-201" ;
+    cs:capacity 60 .
+
+cs:room_lab301 a cs:Room ;
+    cs:name "实验楼 301 机房"@zh ;
+    cs:roomCode "LAB-301" ;
+    cs:capacity 40 .
+
+cs:building_main cs:hasRoom cs:room_main101 , cs:room_main201 .
+cs:building_lab  cs:hasRoom cs:room_lab301 .
+
+# =============================
+# 校园场景进一步扩展示例：学院大类 / 专业 / 学期 / 开课 / 选课 / 考试 / 社团 / 图书馆
+# =============================
+
+# 学院大类与大学关系
+cs:faculty_engineering a cs:Faculty ;
+    cs:name "工学院"@zh ;
+    cs:facultyCode "ENG" .
+
+cs:faculty_science a cs:Faculty ;
+    cs:name "理学院"@zh ;
+    cs:facultyCode "SCI" .
+
+cs:univ_demo cs:hasFaculty cs:faculty_engineering , cs:faculty_science .
+
+cs:faculty_engineering cs:facultyHasDepartment cs:dept_cs , cs:dept_se .
+cs:faculty_science   cs:facultyHasDepartment cs:dept_math .
+
+# 培养方案与专业
+cs:prog_cs_undergrad a cs:Program ;
+    cs:name "计算机科学与技术本科培养方案"@zh ;
+    cs:programCode "P-CS-BS" ;
+    cs:responsibleDepartment cs:dept_cs .
+
+cs:maj_cs_undergrad a cs:Major ;
+    cs:name "计算机科学与技术"@zh ;
+    cs:majorCode "080901" .
+
+cs:prog_cs_undergrad cs:hasMajor cs:maj_cs_undergrad .
+
+cs:prog_se_undergrad a cs:Program ;
+    cs:name "软件工程本科培养方案"@zh ;
+    cs:programCode "P-SE-BS" ;
+    cs:responsibleDepartment cs:dept_se .
+
+cs:maj_se_undergrad a cs:Major ;
+    cs:name "软件工程"@zh ;
+    cs:majorCode "080902" .
+
+cs:prog_se_undergrad cs:hasMajor cs:maj_se_undergrad .
+
+# 学生的专业与就读学校
+cs:student_zhang cs:studentMajor cs:maj_cs_undergrad ;
+    cs:studiesAtUniversity cs:univ_demo .
+
+cs:student_li cs:studentMajor cs:maj_se_undergrad ;
+    cs:studiesAtUniversity cs:univ_demo .
+
+# 教师的任职学校与联系方式
+cs:teacher_wang cs:worksAtUniversity cs:univ_demo ;
+    cs:email "wang@example.edu" ;
+    cs:office "主楼 502"@zh ;
+    cs:officeHour "周二 14:00-16:00"@zh .
+
+cs:teacher_liu cs:worksAtUniversity cs:univ_demo ;
+    cs:email "liu@example.edu" ;
+    cs:office "主楼 503"@zh ;
+    cs:officeHour "周三 9:00-11:00"@zh .
+
+# 学期
+cs:sem_2025_fall a cs:Semester ;
+    cs:name "2025-2025 学年秋季学期"@zh ;
+    cs:semesterCode "2025-FALL" ;
+    cs:semesterYear "2025"^^xsd:gYear ;
+    cs:semesterTerm "秋季学期"@zh .
+
+cs:sem_2025_spring a cs:Semester ;
+    cs:name "2025-2025 学年春季学期"@zh ;
+    cs:semesterCode "2025-SPRING" ;
+    cs:semesterYear "2025"^^xsd:gYear ;
+    cs:semesterTerm "春季学期"@zh .
+
+cs:univ_demo cs:hasSemester cs:sem_2025_fall , cs:sem_2025_spring .
+
+# 课程开课安排（CourseOffering）
+cs:offering_kg_2025_fall a cs:CourseOffering ;
+    cs:name "知识图谱 2025 秋季班"@zh .
+
+cs:offering_python_2025_fall a cs:CourseOffering ;
+    cs:name "Python 程序设计 2025 秋季班"@zh .
+
+cs:course_kg cs:hasOffering cs:offering_kg_2025_fall .
+cs:course_python cs:hasOffering cs:offering_python_2025_fall .
+
+cs:offering_kg_2025_fall cs:offeredInSemester cs:sem_2025_fall ;
+    cs:offeringTaughtBy cs:teacher_wang ;
+    cs:offeringHeldInRoom cs:room_main101 .
+
+cs:offering_python_2025_fall cs:offeredInSemester cs:sem_2025_fall ;
+    cs:offeringTaughtBy cs:teacher_liu ;
+    cs:offeringHeldInRoom cs:room_main201 .
+
+# 选课记录
+cs:enroll_zhang_kg_2025 a cs:Enrollment ;
+    cs:enrollmentOfStudent cs:student_zhang ;
+    cs:enrollmentForOffering cs:offering_kg_2025_fall ;
+    cs:enrollmentStatus "已选"@zh ;
+    cs:enrollmentGrade "95" .
+
+cs:enroll_li_kg_2025 a cs:Enrollment ;
+    cs:enrollmentOfStudent cs:student_li ;
+    cs:enrollmentForOffering cs:offering_kg_2025_fall ;
+    cs:enrollmentStatus "已选"@zh ;
+    cs:enrollmentGrade "88" .
+
+cs:enroll_zhang_python_2025 a cs:Enrollment ;
+    cs:enrollmentOfStudent cs:student_zhang ;
+    cs:enrollmentForOffering cs:offering_python_2025_fall ;
+    cs:enrollmentStatus "已选"@zh ;
+    cs:enrollmentGrade "90" .
+
+cs:offering_kg_2025_fall cs:hasEnrollment cs:enroll_zhang_kg_2025 , cs:enroll_li_kg_2025 .
+cs:offering_python_2025_fall cs:hasEnrollment cs:enroll_zhang_python_2025 .
+
+# 考试
+cs:exam_kg_2025_fall a cs:Exam ;
+    cs:name "知识图谱 期末考试"@zh ;
+    cs:examForOffering cs:offering_kg_2025_fall ;
+    cs:examRoom cs:room_main101 ;
+    cs:examDate "2025-12-20"^^xsd:date .
+
+# 宿舍与社团
+cs:dorm_A a cs:Dormitory ;
+    cs:name "东区 1 号宿舍楼"@zh .
+
+cs:dormroom_A101 a cs:DormRoom ;
+    cs:name "东 1-101 宿舍"@zh ;
+    cs:roomCode "D1-101" ;
+    cs:capacity 4 .
+
+cs:dorm_A cs:hasRoom cs:dormroom_A101 .
+
+cs:club_ai a cs:Club ;
+    cs:name "人工智能协会"@zh .
+
+cs:club_basketball a cs:Club ;
+    cs:name "篮球社"@zh .
+
+cs:student_zhang cs:memberOfClub cs:club_ai .
+cs:student_li   cs:memberOfClub cs:club_basketball .
+
+cs:staff_admin_zhou a cs:Administrator ;
+    cs:name "周老师"@zh ;
+    cs:personId "A001" ;
+    cs:worksAtUniversity cs:univ_demo ;
+    cs:office "行政楼 201"@zh ;
+    cs:officeHour "工作日 9:00-11:30"@zh ;
+    cs:email "zhou_admin@example.edu" .
+
+cs:staff_admin_zhou cs:managesClub cs:club_ai .
+
+# 图书馆与图书
+cs:lib_main a cs:Library ;
+    cs:name "主图书馆"@zh .
+
+cs:univ_demo cs:hasLibrary cs:lib_main .
+
+cs:book_algorithms a cs:Book ;
+    cs:name "算法导论（中文版）"@zh ;
+    cs:year "2020"^^xsd:gYear .
+
+cs:book_nlp a cs:Book ;
+    cs:name "统计自然语言处理"@zh ;
+    cs:year "2019"^^xsd:gYear .
+
+cs:lib_main cs:holdsBook cs:book_algorithms , cs:book_nlp .
+
+cs:student_zhang cs:borrowsBook cs:book_algorithms .
+cs:teacher_liu  cs:borrowsBook cs:book_nlp .

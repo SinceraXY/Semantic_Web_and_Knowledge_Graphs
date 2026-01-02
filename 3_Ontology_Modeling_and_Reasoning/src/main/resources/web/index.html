@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jena 本体与推理可视化 Demo</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <div>
+        <div class="title">Jena 本体与推理可视化 Demo</div>
+        <div class="subtitle">Ontology / Instances / SPARQL / Rules Reasoning</div>
+      </div>
+      <div class="meta">
+        <details class="meta-details" open>
+          <summary>加载信息</summary>
+          <pre class="meta-pre" id="meta"></pre>
+        </details>
+      </div>
+    </header>
+
+    <main class="main">
+      <section class="panel">
+        <div class="panel-title">浏览</div>
+
+        <div class="block">
+          <div class="block-title">模型</div>
+          <div class="row">
+            <label class="radio"><input type="radio" name="model" value="base" checked /> base（显式三元组）</label>
+            <label class="radio"><input type="radio" name="model" value="inf" /> inf（含推理结果）</label>
+          </div>
+        </div>
+
+        <div class="block">
+          <div class="block-title">本体类（Classes）</div>
+          <div class="row">
+            <button class="btn" id="btnLoadClasses">加载</button>
+          </div>
+          <select class="select" id="classSelect" size="10"></select>
+          <div class="row">
+            <button class="btn" id="btnLoadInstances">查看该类实例</button>
+          </div>
+          <div class="list" id="instancesList"></div>
+        </div>
+
+        <div class="block">
+          <div class="block-title">本体属性（Properties）</div>
+          <div class="row">
+            <button class="btn" id="btnLoadProps">加载</button>
+          </div>
+          <div class="list" id="propsList"></div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-title">SPARQL 查询</div>
+
+        <div class="block">
+          <div class="block-title">快速示例</div>
+          <div class="row wrap">
+            <button class="btn" data-example="students">查所有学生</button>
+            <button class="btn" data-example="studentCourses">学生选课</button>
+            <button class="btn" data-example="classHierarchy">类层次（本体）</button>
+            <button class="btn" data-example="propDomainRange">属性 domain/range（本体）</button>
+            <button class="btn" data-example="taughtBy">推理：isTaughtBy</button>
+            <button class="btn" data-example="excellent">推理：优秀学生/奖学金</button>
+          </div>
+        </div>
+
+        <div class="block">
+          <div class="block-title">输入查询（支持 SELECT / ASK）</div>
+          <div class="toolbar">
+            <div class="toolbar-left">
+              <button class="btn" id="btnCopyQuery">复制查询</button>
+            </div>
+            <div class="toolbar-right">
+              <span class="kbd">Ctrl</span> + <span class="kbd">Enter</span> 执行
+            </div>
+          </div>
+          <textarea class="textarea" id="sparql"></textarea>
+          <div class="row">
+            <button class="btn primary" id="btnRun">执行</button>
+            <button class="btn" id="btnClear">清空</button>
+          </div>
+          <div class="hint">
+            默认已自动注入 PREFIX：rdf/rdfs/owl/xsd/cs/:（其中 : 等同于 cs:）。
+          </div>
+        </div>
+
+        <div class="block">
+          <div class="block-title">结果</div>
+          <div class="toolbar">
+            <div class="toolbar-left">
+              <button class="btn" id="btnCopyResult">复制结果（TSV）</button>
+            </div>
+            <div class="toolbar-right">
+              <span class="muted" id="resultMeta"></span>
+            </div>
+          </div>
+          <div class="result" id="result"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" aria-live="polite"></div>
+
+  <script src="/app.js"></script>
+</body>
+</html>

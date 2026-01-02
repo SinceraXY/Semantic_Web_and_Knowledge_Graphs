@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE university SYSTEM "university.dtd">
+<university>
+    <departments>
+        <department id="D100" code="示例系">
+            <name>示例信息工程系</name>
+            <faculty>工学院</faculty>
+        </department>
+    </departments>
+
+    <teachers>
+        <teacher id="T100" deptRef="D100">
+            <name>王老师</name>
+            <title>副教授</title>
+        </teacher>
+    </teachers>
+
+    <students>
+        <student id="S100" deptRef="D100">
+            <name>学生甲</name>
+            <gender>男</gender>
+            <enrollmentYear>2021</enrollmentYear>
+            <program>信息工程本科</program>
+        </student>
+    </students>
+
+    <courses>
+        <course id="C100">
+            <title>示例课程</title>
+            <credits>2</credits>
+            <departmentRef>D100</departmentRef>
+            <teacherRef>T100</teacherRef>
+        </course>
+    </courses>
+
+    <rooms>
+        <room id="R100">
+            <name>示例教室</name>
+            <building>实验楼</building>
+            <capacity>30</capacity>
+        </room>
+    </rooms>
+</university>
